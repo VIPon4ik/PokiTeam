@@ -1,0 +1,23 @@
+.label {
+  @apply flex flex-col gap-2 font-semibold mb-4 relative
+}
+
+.labelText {
+  @apply flex items-center gap-2;
+}
+
+.labelIcon {
+  @apply size-5 inline-block;
+}
+
+.inputContainer {
+  @apply border-borderGray border rounded-lg py-3 px-4 font-normal flex gap-4;
+}
+
+.error {
+  @apply text-textSub font-normal
+}
+
+.inputIcon {
+  @apply size-5 absolute top-12 left-3
+}
