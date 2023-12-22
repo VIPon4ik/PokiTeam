@@ -18,20 +18,23 @@ const Select: FC<SelectProps> = ({ children }) => {
   const [selectedPokemons, setSelectedPokemons] = useState<Object[]>([]);
   const [filter, setFilter] = useState("");
   const [filteredPokemons, setFilteredPokemons] = useState([]);
-  const [showPokemons, setShowPokemons] = useState(true);
+  const [showPokemons, setShowPokemons] = useState(false);
+
+  const handleShowPokemons = () => {
+    setShowPokemons(state => !state);
+  }
 
   const handleChangeFilter = (e: any) => {
     const value = e.target.value;
     setFilter(value);
   };
 
-  const handleRemove = (pokemon: Object) => {
-    console.log('handleRemove')
-    setSelectedPokemons((state) => state.filter(pok => pok !== pokemon));
+  const handleRemove = (pokemon: Object, e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setSelectedPokemons(state => state.filter(pok => pok !== pokemon));
   }
 
   const handleSelect = (pokemon: Object) => {
-    console.log('handleSelected')
     setSelectedPokemons((state) => [...state, pokemon]);
   };
 
@@ -45,17 +48,15 @@ const Select: FC<SelectProps> = ({ children }) => {
     }
   };
 
+  const getFilteredPokemons = () => pokemons.filter((pokemon: Pokemon) => pokemon.name.includes(filter.toLowerCase())).filter((pokemon) => !selectedPokemons.includes(pokemon))
+
   useEffect(() => {
     fetchData();
   }, []);
 
   useEffect(() => {
     setFilteredPokemons(
-      pokemons
-        .filter((pokemon: Pokemon) =>
-          pokemon.name.includes(filter.toLowerCase())
-        )
-        .filter((pokemon) => !selectedPokemons.includes(pokemon))
+      getFilteredPokemons()
     );
   }, [filter, selectedPokemons]);
 
@@ -63,10 +64,10 @@ const Select: FC<SelectProps> = ({ children }) => {
     <div className={styles.container}>
       <label className={styles.label}>
         <p className={styles.labelText}>{children} <InformationCircleIcon className={styles.labelIcon} /></p>
-        <div className={styles.inputContainer}>
+        <div className={styles.inputContainer} onClick={handleShowPokemons}>
           <div className={styles.badgeContainer}>
             {selectedPokemons.map((pokemon: any) => (
-              <button key={pokemon.name} onClick={() => handleRemove(pokemon)} className={styles.badge}>
+              <button key={pokemon.name} onClick={(e) => handleRemove(pokemon, e)} className={styles.badge}>
                 {pokemon.name}
                 <XMarkIcon className={styles.badgeIcon} />
               </button>
@@ -82,7 +83,7 @@ const Select: FC<SelectProps> = ({ children }) => {
         </div>
       </label>
       <ul className={clsx(styles.optionList, selectedPokemons.length !== 4 && styles.withBorder)}>
-        {selectedPokemons.length !== 4 && filteredPokemons.map((pokemon, index) => (
+        {showPokemons && selectedPokemons.length !== 4 && filteredPokemons.map((pokemon, index) => (
           <Option
             key={index}
             pokemon={pokemon}
