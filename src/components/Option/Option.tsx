@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import styles from './Option.module.scss';
 
 interface Pokemon {
   name: string;
@@ -11,8 +12,8 @@ interface OptionProps {
 
 const Option: FC<OptionProps> = ({ pokemon, handleSelect }) => {
     return (
-        <li onClick={() => handleSelect(pokemon)} className="cursor-pointer">
-            <p>{pokemon.name}</p>
+        <li className={styles.optionItem} onClick={() => handleSelect(pokemon)}>
+            <p className={styles.optionText}>{pokemon.name}</p>
         </li>
     );
 };

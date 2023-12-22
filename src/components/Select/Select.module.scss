@@ -1,5 +1,9 @@
+.container {
+  @apply relative;
+}
+
 .label {
-  @apply flex flex-col gap-2 font-semibold mb-4 relative
+  @apply flex flex-col gap-2 font-semibold mb-4;
 }
 
 .labelText {
@@ -11,7 +15,11 @@
 }
 
 .inputContainer {
-  @apply border-borderGray border rounded-lg py-3 px-4 font-normal flex gap-4;
+  @apply border-borderGray border rounded-lg py-3 px-4 font-normal flex gap-2 h-12;
+}
+
+.input {
+  @apply outline-none w-full;
 }
 
 .error {
@@ -20,4 +28,24 @@
 
 .inputIcon {
   @apply size-5 absolute top-12 left-3
+}
+
+.badgeContainer {
+  @apply flex gap-1;
+}
+
+.badge {
+  @apply px-2.5 py-0.5 rounded-full flex justify-center items-center bg-slate-100 text-xs;
+}
+
+.badgeIcon { 
+  @apply size-3 align-middle;
+}
+
+.optionList {
+  @apply block max-h-28 overflow-y-auto absolute top-20 w-full bg-white rounded-lg;
+}
+
+.withBorder {
+  @apply border;
 }
