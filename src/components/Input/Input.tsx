@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styles from './Input.module.scss'
-import { EnvelopeIcon } from '@heroicons/react/24/solid'
+import { EnvelopeIcon, InformationCircleIcon } from '@heroicons/react/24/solid'
 
 interface InputProps {
   children?: string,
@@ -9,10 +9,10 @@ interface InputProps {
 const Input: FC<InputProps> = ({ children }) => {
   return (
     <label className={styles.label}>
-      {children}
+      <p className={styles.labelText}>{children} <InformationCircleIcon className={styles.labelIcon} /></p>
       <input className={styles.input} type='text' placeholder={children} />
       <p className={styles.error}>This information is required</p>
-      <EnvelopeIcon className={styles.icon}/>
+      <EnvelopeIcon className={styles.inputIcon}/>
     </label>
   )
 }
