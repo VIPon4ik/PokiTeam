@@ -6,14 +6,14 @@ interface Pokemon {
 }
 
 interface OptionProps {
-  pokemon: Pokemon;
+  option: Pokemon;
   handleSelect: (pokemon: Pokemon) => void;
 }
 
-const Option: FC<OptionProps> = ({ pokemon, handleSelect }) => {
+const Option: FC<OptionProps> = ({ option, handleSelect }) => {
     return (
-        <li className={styles.optionItem} onClick={() => handleSelect(pokemon)}>
-            <p className={styles.optionText}>{pokemon.name}</p>
+        <li className={styles.optionItem} onClick={() => handleSelect(option)}>
+            <p className={styles.optionText}>{option.name}</p>
         </li>
     );
 };

@@ -10,3 +10,7 @@ export const fetchPokemons = async () => {
     console.log(e);
   }
 }
+
+export const fetchPokemonsTeam = async (pokemons: any) => {
+
+}

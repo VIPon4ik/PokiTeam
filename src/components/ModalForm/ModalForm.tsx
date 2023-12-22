@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styles from './Modal.module.scss'
 import Input from '../Input/Input'
 import Button from '../Button/Button'
 import Select from '../Select/Select'
 
-const ModalForm = () => {
+interface ModalFormProps {
+  title: string,
+  options: Array<any>,
+}
+
+const ModalForm: FC<ModalFormProps> = ({ title, options }) => {
   return (
     <form className={styles.form}>
-      <h1 className={styles.title}>Pokemon Team</h1>
+      <h1 className={styles.title}>{title}</h1>
       <Input>First name</Input>
       <Input>Second name</Input>
-      <Select>Choose Pokemon</Select>
-      <Button></Button>
+      <Select label='Choose Pokemon' options={options} />
+      <Button />
     </form>
   )
 }

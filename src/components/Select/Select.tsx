@@ -1,27 +1,25 @@
 import React, { useState, useEffect, FC } from "react";
 import Option from "../Option/Option";
-import { fetchPokemons } from "../../api/pokemonApi";
 import styles from './Select.module.scss';
 import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
-interface Pokemon {
+interface OptionProps {
   name: string;
 }
 
 interface SelectProps {
-  children?: React.ReactNode,
+  label: string,
+  options: Array<any>,
 }
 
-const Select: FC<SelectProps> = ({ children }) => {
-  const [pokemons, setPokemons] = useState([]);
-  const [selectedPokemons, setSelectedPokemons] = useState<Object[]>([]);
+const Select: FC<SelectProps> = ({ label, options }) => {
+  const [selectedOptions, setSelectedOptions] = useState<Object[]>([]);
   const [filter, setFilter] = useState("");
-  const [filteredPokemons, setFilteredPokemons] = useState([]);
-  const [showPokemons, setShowPokemons] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
 
-  const handleShowPokemons = () => {
-    setShowPokemons(state => !state);
+  const handleShowOptions = () => {
+    setShowOptions(state => !state);
   }
 
   const handleChangeFilter = (e: any) => {
@@ -29,64 +27,46 @@ const Select: FC<SelectProps> = ({ children }) => {
     setFilter(value);
   };
 
-  const handleRemove = (pokemon: Object, e:React.MouseEvent<HTMLButtonElement>) => {
+  const handleRemove = (option: Object, e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setSelectedPokemons(state => state.filter(pok => pok !== pokemon));
+    setSelectedOptions(state => state.filter(opt => opt !== option));
   }
 
-  const handleSelect = (pokemon: Object) => {
-    setSelectedPokemons((state) => [...state, pokemon]);
+  const handleSelect = (option: Object) => {
+    setSelectedOptions((state) => [...state, option]);
   };
 
-  const fetchData = async () => {
-    try {
-      const data = await fetchPokemons();
-      setPokemons(data);
-      setFilteredPokemons(data);
-    } catch (error) {
-      console.error("Error fetching Pokemon data:", error);
-    }
-  };
+  const filteredOptions =  options.filter((option: OptionProps) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
 
-  const getFilteredPokemons = () => pokemons.filter((pokemon: Pokemon) => pokemon.name.includes(filter.toLowerCase())).filter((pokemon) => !selectedPokemons.includes(pokemon))
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    setFilteredPokemons(
-      getFilteredPokemons()
-    );
-  }, [filter, selectedPokemons]);
+  const isSelectedOptionsLengthFour = selectedOptions.length !== 4;
 
   return (
     <div className={styles.container}>
       <label className={styles.label}>
-        <p className={styles.labelText}>{children} <InformationCircleIcon className={styles.labelIcon} /></p>
-        <div className={styles.inputContainer} onClick={handleShowPokemons}>
+        <p className={styles.labelText}>{label} <InformationCircleIcon className={styles.labelIcon} /></p>
+        <div className={styles.inputContainer} onClick={handleShowOptions}>
           <div className={styles.badgeContainer}>
-            {selectedPokemons.map((pokemon: any) => (
-              <button key={pokemon.name} onClick={(e) => handleRemove(pokemon, e)} className={styles.badge}>
-                {pokemon.name}
+            {selectedOptions.map((option: any) => (
+              <button key={option.name} onClick={(e) => handleRemove(option, e)} className={styles.badge}>
+                {option.name}
                 <XMarkIcon className={styles.badgeIcon} />
               </button>
             ))}
           </div>
-          {selectedPokemons.length !== 4 && <input
+          {isSelectedOptionsLengthFour && <input
             className={styles.input}
             onChange={handleChangeFilter}
             type="text"
-            placeholder="Select"
+            placeholder={label}
             value={filter}
           />}
         </div>
       </label>
-      <ul className={clsx(styles.optionList, selectedPokemons.length !== 4 && styles.withBorder)}>
-        {showPokemons && selectedPokemons.length !== 4 && filteredPokemons.map((pokemon, index) => (
+      <ul className={clsx(styles.optionList, showOptions && isSelectedOptionsLengthFour && styles.withBorder)}>
+        {showOptions && isSelectedOptionsLengthFour && filteredOptions.map((option, index) => (
           <Option
             key={index}
-            pokemon={pokemon}
+            option={option}
             handleSelect={handleSelect}
           />
         ))}
