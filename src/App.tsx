@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import ModalForm from './components/ModalForm/ModalForm'
 
 function App() {
   return (
     <div>
-      <p>Welcome to Luna Edge technical interview</p>
+      <ModalForm />
     </div>
   )
 }
