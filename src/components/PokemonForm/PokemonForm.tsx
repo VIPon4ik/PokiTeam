@@ -5,6 +5,7 @@ import Button from '../Button/Button'
 import Select from '../Select/Select'
 import { fetchPokemons, fetchPokemonsTeam } from '../../api/pokemonApi'
 import { useForm } from 'react-hook-form'
+import TeamContainer from '../TeamContainer/TeamContainer'
 
 interface ModalFormProps {
   title: string,
@@ -15,22 +16,33 @@ const ModalForm: FC<ModalFormProps> = ({ title }) => {
   const [selectedPokemons, setSelectedPokemons] = useState<Object[]>([]);
   const [pokemonTeam, setPokemonTeam] = useState([]);
   const [error, setError] = useState<any>(null);
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [user, setUser] = useState(null);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-  const selectedPokemonError = () => {
-    if (selectedPokemons.length !== 4) {
+  const isSelectedPokemonsLengthFour = selectedPokemons.length === 4;
+
+  const onError = () => {
+    if (!isSelectedPokemonsLengthFour) {
+      setError('You need to choose 4 pokemons')
+    }
+  }
+
+  const resetForm = () => {
+    setSelectedPokemons([]);
+    setError(null);
+    reset();
+  }
+
+  const onSubmit = async (data: any) => {
+    if (!isSelectedPokemonsLengthFour) {
       setError('You need to choose 4 pokemons')
       return;
     }
 
-    setError(null);
-  }
-
-  const onSubmit = async (data: any) => {
-    selectedPokemonError();
-
     const responses: any = await fetchPokemonsTeam(selectedPokemons);
     setPokemonTeam(responses);
+    setUser({...data});
+    resetForm();
   }
 
   const fetchData = async () => {
@@ -55,13 +67,15 @@ const ModalForm: FC<ModalFormProps> = ({ title }) => {
     },
   }
 
+  console.log(user);
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit, selectedPokemonError)} >
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)} >
       <h1 className={styles.title}>{title}</h1>
       <Input register={register("name", validationPattern)} label='Name' error={errors.name}></Input>
       <Input register={register("surname", validationPattern)} label='Surname' error={errors.surname}></Input>
       <Select label='Choose Pokemons' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={setSelectedPokemons} error={selectedPokemons.length !== 4 && error} />
-      <div className={styles.pokemonTeamContainer}>{pokemonTeam.map(img => <img key={img} src={img} width={60} height={60} alt='Pokemon' />)}</div>
+      <TeamContainer team={pokemonTeam} user={user}/>
       <Button />
     </form >
   )
