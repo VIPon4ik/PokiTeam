@@ -15,15 +15,11 @@
 }
 
 .inputContainer {
-    @apply border-borderGray border rounded-lg py-3 px-4 font-normal flex gap-2 min-h-12;
+    @apply border-borderGray border rounded-lg py-3 px-4 font-normal flex flex-wrap gap-2 min-h-12 min-w-64;
 }
 
 .input {
-    @apply outline-none;
-}
-
-.inputFull {
-    @apply w-full;
+    @apply outline-none max-w-full;
 }
 
 .error {
@@ -32,10 +28,6 @@
 
 .inputIcon {
     @apply size-5 absolute top-12 right-3 cursor-pointer;
-}
-
-.badgeContainer {
-    @apply flex gap-x-2 gap-y-1 flex-wrap flex-1 w-full max-w-80;
 }
 
 .badge {
@@ -48,6 +40,10 @@
 
 .optionList {
     @apply block max-h-28 overflow-y-auto absolute top-20 w-full bg-white rounded-lg;
+}
+
+.optionSecondPosition {
+    @apply top-28;
 }
 
 .withBorder {

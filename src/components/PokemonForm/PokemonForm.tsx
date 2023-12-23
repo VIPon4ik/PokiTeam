@@ -41,7 +41,7 @@ const ModalForm: FC<ModalFormProps> = ({ title }) => {
       <Input register={register("firstName", { required: true })} label='First name'></Input>
       <Input register={register("secondName")} label='Second name'></Input>
       <Select label='Choose Pokemon' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={setSelectedPokemons} />
-      <div className={styles.pokemonTeamContainer}>{pokemonTeam.map(img => <img src={img} width={60} height={60} alt='Pokemon' />)}</div>
+      <div className={styles.pokemonTeamContainer}>{pokemonTeam.map(img => <img key={img} src={img} width={60} height={60} alt='Pokemon' />)}</div>
       <Button />
     </form>
   )

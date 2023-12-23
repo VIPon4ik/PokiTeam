@@ -19,8 +19,8 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
   const [filter, setFilter] = useState("");
   const [showOptions, setShowOptions] = useState(false);
 
-  const handleShowOptions = (e:any) => {
-    e.preventDefault(); 
+  const handleShowOptions = (e: any) => {
+    e.preventDefault();
     setShowOptions(state => !state);
   }
 
@@ -31,14 +31,14 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
 
   const handleRemove = (option: Object, e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setSelectedOptions((state:any) => state.filter((opt:any) => opt !== option));
+    setSelectedOptions((state: any) => state.filter((opt: any) => opt !== option));
   }
 
   const handleSelect = (option: Object) => {
-    setSelectedOptions((state:any) => [...state, option]);
+    setSelectedOptions((state: any) => [...state, option]);
   };
 
-  const filteredOptions =  options.filter((option: OptionProps) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
+  const filteredOptions = options.filter((option: OptionProps) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
 
   const isSelectedOptionsLengthFour = selectedOptions.length === 4;
 
@@ -47,25 +47,23 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
       <label className={styles.label}>
         <p className={styles.labelText}>{label} <InformationCircleIcon className={styles.labelIcon} /></p>
         <div className={styles.inputContainer}>
-          <div className={styles.badgeContainer}>
-            {selectedOptions.map((option: any) => (
-              <button key={option.name} onClick={(e) => handleRemove(option, e)} className={styles.badge}>
-                {option.name}
-                <XMarkIcon className={styles.badgeIcon} />
-              </button>
-            ))}
-          </div>
+          {selectedOptions.map((option: any) => (
+            <button key={option.name} onClick={(e) => handleRemove(option, e)} className={styles.badge}>
+              {option.name}
+              <XMarkIcon className={styles.badgeIcon} />
+            </button>
+          ))}
           {!isSelectedOptionsLengthFour && <input
-            className={clsx(styles.input, selectedOptions.length === 0 && styles.inputFull)}
+            className={styles.input}
             onChange={handleChangeFilter}
             type="text"
             placeholder={selectedOptions.length === 0 && label}
             value={filter}
           />}
-          <ChevronDownIcon className={styles.inputIcon} onClick={handleShowOptions}/>
+          <ChevronDownIcon className={styles.inputIcon} onClick={handleShowOptions} />
         </div>
       </label>
-      <ul className={clsx(styles.optionList, showOptions && !isSelectedOptionsLengthFour && styles.withBorder)}>
+      <ul className={clsx(styles.optionList, showOptions && !isSelectedOptionsLengthFour && styles.withBorder, selectedOptions.length >= 3 && styles.optionSecondPosition)}>
         {showOptions && !isSelectedOptionsLengthFour && filteredOptions.map((option, index) => (
           <Option
             key={index}
