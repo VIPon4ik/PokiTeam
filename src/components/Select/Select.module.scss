@@ -16,6 +16,10 @@
 
 .inputContainer {
     @apply border-borderGray border rounded-lg py-3 px-4 font-normal flex flex-wrap gap-2 min-h-12 min-w-64;
+
+    &:focus-within {
+        @apply border-purple border-2;
+    }
 }
 
 .input {
@@ -23,7 +27,15 @@
 }
 
 .error {
-    @apply text-textSub font-normal;
+    @apply text-error font-normal;
+}
+
+.errorInput {
+    @apply border-error;
+
+    &:focus-within {
+        @apply border-error;
+    }
 }
 
 .inputIcon {

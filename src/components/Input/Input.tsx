@@ -5,7 +5,6 @@ import { InputProps } from '../../types/input.type'
 import clsx from 'clsx'
 
 const Input: FC<InputProps> = ({ label, register, error }) => {
-  console.log(error);
   return (
     <label className={styles.label}>
       <p className={styles.labelText}>{label} <InformationCircleIcon className={styles.labelIcon} /></p>

@@ -49,12 +49,18 @@ const ModalForm: FC<ModalFormProps> = ({ title }) => {
     },
   }
 
+  console.log(error);
+
+  if (selectedPokemons.length === 4) {
+    setError(null);
+  }
+
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)} >
       <h1 className={styles.title}>{title}</h1>
       <Input register={register("name", validationPattern)} label='Name' error={errors.name}></Input>
       <Input register={register("surname", validationPattern)} label='Surname' error={errors.surname}></Input>
-      <Select label='Choose Pokemon' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={setSelectedPokemons} />
+      <Select label='Choose Pokemon' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={setSelectedPokemons} error={error} />
       <div className={styles.pokemonTeamContainer}>{pokemonTeam.map(img => <img key={img} src={img} width={60} height={60} alt='Pokemon' />)}</div>
       <Button />
     </form >

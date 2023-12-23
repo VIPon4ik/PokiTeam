@@ -13,9 +13,10 @@ interface SelectProps {
   options: Array<any>,
   selectedOptions: Array<any>,
   setSelectedOptions: Function,
+  error:any,
 }
 
-const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions }) => {
+const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions, error }) => {
   const [filter, setFilter] = useState("");
   const [showOptions, setShowOptions] = useState(false);
 
@@ -46,7 +47,7 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
     <div className={styles.container}>
       <label className={styles.label}>
         <p className={styles.labelText}>{label} <InformationCircleIcon className={styles.labelIcon} /></p>
-        <div className={styles.inputContainer}>
+        <div className={clsx(styles.inputContainer, error && styles.errorInput)}>
           {selectedOptions.map((option: any) => (
             <button key={option.name} onClick={(e) => handleRemove(option, e)} className={styles.badge}>
               {option.name}
@@ -62,6 +63,7 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
           />}
           <ChevronDownIcon className={styles.inputIcon} onClick={handleShowOptions} />
         </div>
+        {error && <p className={styles.error}>{error}</p>}
       </label>
       <ul className={clsx(styles.optionList, showOptions && !isSelectedOptionsLengthFour && styles.withBorder, selectedOptions.length >= 3 && styles.optionSecondPosition)}>
         {showOptions && !isSelectedOptionsLengthFour && filteredOptions.map((option, index) => (
