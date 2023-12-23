@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 import styles from './TeamContainer.module.scss'
-import { TeamContainer } from '../../types/teamContainer.type'
+import { TeamContainerProps } from '../../types/teamContainer.type'
 
-const TeamContainer: FC<TeamContainer> = ({ team, user }) => {
+const TeamContainer: FC<TeamContainerProps> = ({ team, user }) => {
   return (
     <div>
       {user && <p className={styles.text}>{`${user.name} ${user.surname} team:`}</p>}

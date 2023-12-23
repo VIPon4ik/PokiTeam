@@ -3,7 +3,7 @@ interface UserProps {
   surname: string,
 }
 
-export interface TeamContainer {
+export interface TeamContainerProps {
   team: Array<string>,
   user: UserProps,
 }
