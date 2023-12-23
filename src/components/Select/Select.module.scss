@@ -32,7 +32,7 @@
 }
 
 .badgeContainer {
-    @apply flex gap-1;
+    @apply flex gap-1 max-w-64 overflow-ellipsis;
 }
 
 .badge {

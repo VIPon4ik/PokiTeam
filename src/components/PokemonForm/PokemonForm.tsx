@@ -4,6 +4,7 @@ import Input from '../Input/Input'
 import Button from '../Button/Button'
 import Select from '../Select/Select'
 import { fetchPokemons, fetchPokemonsTeam } from '../../api/pokemonApi'
+import { useForm } from 'react-hook-form'
 
 interface ModalFormProps {
   title: string,
@@ -11,6 +12,15 @@ interface ModalFormProps {
 
 const ModalForm: FC<ModalFormProps> = ({ title }) => {
   const [pokemons, setPokemons] = useState([]);
+  const [selectedPokemons, setSelectedPokemons] = useState<Object[]>([]);
+  const [pokemonTeam, setPokemonTeam] = useState([]);
+  const [error, setError] = useState(null);
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = async (data: any) => {
+    const responses:any = await fetchPokemonsTeam(selectedPokemons);
+    setPokemonTeam(responses);
+  }
 
   const fetchData = async () => {
     try {
@@ -20,18 +30,18 @@ const ModalForm: FC<ModalFormProps> = ({ title }) => {
       console.error("Error fetching Pokemon data:", error);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, []);
-  
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <h1 className={styles.title}>{title}</h1>
-      <Input label='First name'></Input>
-      <Input label='Second name'></Input>
-      <Select label='Choose Pokemon' options={pokemons} />
+      <Input register={register("firstName", { required: true })} label='First name'></Input>
+      <Input register={register("secondName")} label='Second name'></Input>
+      <Select label='Choose Pokemon' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={setSelectedPokemons} />
+      <div className={styles.pokemonTeamContainer}>{pokemonTeam.map(img => <img src={img} width={60} height={60} alt='Pokemon' />)}</div>
       <Button />
     </form>
   )

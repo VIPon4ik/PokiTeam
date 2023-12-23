@@ -11,10 +11,11 @@ interface OptionProps {
 interface SelectProps {
   label: string,
   options: Array<any>,
+  selectedOptions: Array<any>,
+  setSelectedOptions: Function,
 }
 
-const Select: FC<SelectProps> = ({ label, options }) => {
-  const [selectedOptions, setSelectedOptions] = useState<Object[]>([]);
+const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions }) => {
   const [filter, setFilter] = useState("");
   const [showOptions, setShowOptions] = useState(false);
 
@@ -29,11 +30,11 @@ const Select: FC<SelectProps> = ({ label, options }) => {
 
   const handleRemove = (option: Object, e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setSelectedOptions(state => state.filter(opt => opt !== option));
+    setSelectedOptions((state:any) => state.filter((opt:any) => opt !== option));
   }
 
   const handleSelect = (option: Object) => {
-    setSelectedOptions((state) => [...state, option]);
+    setSelectedOptions((state:any) => [...state, option]);
   };
 
   const filteredOptions =  options.filter((option: OptionProps) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
