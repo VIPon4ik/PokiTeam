@@ -18,7 +18,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
     "scss": "^0.2.4",
-    "storybook": "^8.0.0-alpha.4",
+    "storybook": "7.6",
     "storybook-addon-pseudo-states": "^2.1.2"
   },
   "devDependencies": {

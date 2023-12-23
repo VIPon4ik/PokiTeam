@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Select from './Select';
-import styles from './Select.module.scss';
 
 const defaultValues = [{ name: 'Pikachu', url: '' },
   { name: 'Charmeleon', url: '' },
@@ -27,15 +26,27 @@ export const Default: Story = {
     label: 'Choose Pokemons',
     options: defaultValues,
     selectedOptions,
-  }
+  },
 }
 
-export const Hover: Story = {
+export const Focus: Story = {
   args: {
     label: 'Choose Pokemons',
     options: defaultValues,
     selectedOptions: [],
-  }
-}
+  },
+  parameters: {
+    pseudo: {
+      focusWithin: true,
+    },
+  },
+};
 
-Hover.parameters = { pseudo: { focus: true }}
+export const Validation: Story = {
+  args: {
+    label: 'Choose Pokemons',
+    options: defaultValues,
+    selectedOptions: [],
+    error: 'This field is required',
+  },
+}
