@@ -1,3 +1,7 @@
 .teamContainer {
   @apply flex gap-2 justify-between mb-5;
 }
+
+.text {
+  @apply font-semibold mb-2;
+}

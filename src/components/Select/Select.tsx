@@ -77,7 +77,7 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
         </div>
         {error && <p className={styles.error}>{error}</p>}
       </label>
-      <ul className={clsx(styles.optionList, showOptions && !isSelectedOptionsLengthFour && styles.withBorder, selectedOptions.length >= 3 && styles.optionSecondPosition)}>
+      <ul className={clsx(styles.optionList, showOptions && !isSelectedOptionsLengthFour && styles.withBorder)}>
         {showOptions && !isSelectedOptionsLengthFour && filteredOptions.map((option, index) => (
           <Option
             key={index}

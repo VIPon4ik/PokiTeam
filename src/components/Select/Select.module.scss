@@ -51,11 +51,7 @@
 }
 
 .optionList {
-    @apply block max-h-28 overflow-y-auto absolute top-20 w-full bg-white rounded-lg;
-}
-
-.optionSecondPosition {
-    @apply top-28;
+    @apply block max-h-28 overflow-y-auto absolute top-full w-full bg-white rounded-lg;
 }
 
 .withBorder {
