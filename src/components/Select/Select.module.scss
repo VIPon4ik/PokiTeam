@@ -15,7 +15,7 @@
 }
 
 .inputContainer {
-    @apply border-borderGray border rounded-lg py-3 px-6 font-normal flex flex-wrap gap-2 min-h-12 min-w-64;
+    @apply border-borderGray bg-white border rounded-lg py-3 px-6 font-normal flex flex-wrap gap-2 min-h-12 min-w-64;
 
     &:focus-within {
         @apply border-purple border-2;

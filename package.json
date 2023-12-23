@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
@@ -15,9 +17,18 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "storybook": "^7.6.6"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "7.6.6",
+    "@storybook/addon-interactions": "7.6.6",
+    "@storybook/addon-links": "7.6.6",
+    "@storybook/addon-onboarding": "1.0.10",
+    "@storybook/blocks": "7.6.6",
+    "@storybook/react": "7.6.6",
+    "@storybook/react-vite": "7.6.6",
+    "@storybook/test": "7.6.6",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
