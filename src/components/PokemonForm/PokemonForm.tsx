@@ -17,11 +17,17 @@ const ModalForm: FC<ModalFormProps> = ({ title }) => {
   const [error, setError] = useState<any>(null);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = async (data: any) => {
+  const selectedPokemonError = () => {
     if (selectedPokemons.length !== 4) {
-      setError('You must choose 4 pokemons');
+      setError('You need to choose 4 pokemons')
       return;
     }
+
+    setError(null);
+  }
+
+  const onSubmit = async (data: any) => {
+    selectedPokemonError();
 
     const responses: any = await fetchPokemonsTeam(selectedPokemons);
     setPokemonTeam(responses);
@@ -49,18 +55,12 @@ const ModalForm: FC<ModalFormProps> = ({ title }) => {
     },
   }
 
-  console.log(error);
-
-  if (selectedPokemons.length === 4) {
-    setError(null);
-  }
-
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)} >
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit, selectedPokemonError)} >
       <h1 className={styles.title}>{title}</h1>
       <Input register={register("name", validationPattern)} label='Name' error={errors.name}></Input>
       <Input register={register("surname", validationPattern)} label='Surname' error={errors.surname}></Input>
-      <Select label='Choose Pokemon' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={setSelectedPokemons} error={error} />
+      <Select label='Choose Pokemons' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={setSelectedPokemons} error={selectedPokemons.length !== 4 && error} />
       <div className={styles.pokemonTeamContainer}>{pokemonTeam.map(img => <img key={img} src={img} width={60} height={60} alt='Pokemon' />)}</div>
       <Button />
     </form >

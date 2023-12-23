@@ -13,7 +13,7 @@ interface SelectProps {
   options: Array<any>,
   selectedOptions: Array<any>,
   setSelectedOptions: Function,
-  error:any,
+  error: any,
 }
 
 const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions, error }) => {
