@@ -67,8 +67,6 @@ const ModalForm: FC<ModalFormProps> = ({ title }) => {
     },
   }
 
-  console.log(user);
-
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)} >
       <h1 className={styles.title}>{title}</h1>

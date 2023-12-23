@@ -22,8 +22,14 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
 
   const handleShowOptions = (e: any) => {
     e.preventDefault();
+    if (isSelectedOptionsLengthFour) {
+      return;
+    }
+
     setShowOptions(state => !state);
   }
+
+  console.log(showOptions);
 
   const handleChangeFilter = (e: any) => {
     const value = e.target.value;
@@ -35,13 +41,19 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
     setSelectedOptions((state: any) => state.filter((opt: any) => opt !== option));
   }
 
-  const handleSelect = (option: Object) => {
-    setSelectedOptions((state: any) => [...state, option]);
+  const handleSelect = async (option: Object) => {
+    await setSelectedOptions((state: any) => [...state, option]);
   };
 
   const filteredOptions = options.filter((option: OptionProps) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
 
   const isSelectedOptionsLengthFour = selectedOptions.length === 4;
+
+  useEffect(() => {
+    if (isSelectedOptionsLengthFour) {
+      setShowOptions(false);
+    }
+  }, [selectedOptions])
 
   return (
     <div className={styles.container}>
