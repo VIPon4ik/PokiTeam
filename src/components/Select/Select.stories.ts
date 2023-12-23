@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Select from './Select';
+import styles from './Select.module.scss';
 
 const defaultValues = [{ name: 'Pikachu', url: '' },
   { name: 'Charmeleon', url: '' },
@@ -7,19 +8,15 @@ const defaultValues = [{ name: 'Pikachu', url: '' },
   { name: 'Venusaur', url: '' }
 ]
 
-const selectedOptions = [];
+const selectedOptions:any = [];
 
-const addFunc = (option:any) => {
-  selectedOptions.push(option);
-}
-
-const meta = {
+const meta: Meta<typeof Select> = {
   title: 'Select',
   component: Select,
   parameters: {
     layout: 'centered',
   },
-} satisfies Meta<typeof Select>;
+};
 
 export default meta;
 
@@ -30,7 +27,6 @@ export const Default: Story = {
     label: 'Choose Pokemons',
     options: defaultValues,
     selectedOptions,
-    setSelectedOptions: addFunc,
   }
 }
 
@@ -41,3 +37,5 @@ export const Hover: Story = {
     selectedOptions: [],
   }
 }
+
+Hover.parameters = { pseudo: { focus: true }}
