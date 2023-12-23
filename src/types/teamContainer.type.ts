@@ -5,5 +5,5 @@ interface UserProps {
 
 export interface TeamContainerProps {
   team: Array<string>,
-  user: UserProps,
+  user: UserProps | null,
 }
