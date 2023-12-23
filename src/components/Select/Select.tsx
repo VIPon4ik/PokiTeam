@@ -3,23 +3,13 @@ import Option from "../Option/Option";
 import styles from './Select.module.scss';
 import { InformationCircleIcon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
+import { SelectProps } from "../../types/select.type";
+import { OptFields } from "../../types/option.type";
 
-interface OptionProps {
-  name: string;
-}
-
-interface SelectProps {
-  label: string,
-  options: Array<any>,
-  selectedOptions: Array<any>,
-  setSelectedOptions: Function,
-  error: any,
-}
 
 const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions, error }) => {
   const [filter, setFilter] = useState("");
   const [showOptions, setShowOptions] = useState(false);
-
   const handleShowOptions = (e: any) => {
     e.preventDefault();
     if (isSelectedOptionsLengthFour) {
@@ -29,23 +19,21 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
     setShowOptions(state => !state);
   }
 
-  console.log(showOptions);
-
   const handleChangeFilter = (e: any) => {
     const value = e.target.value;
     setFilter(value);
   };
 
-  const handleRemove = (option: Object, e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleRemove = (option: Object, e: any) => {
     e.preventDefault();
     setSelectedOptions((state: any) => state.filter((opt: any) => opt !== option));
   }
 
-  const handleSelect = async (option: Object) => {
+  const handleSelect = async (option: OptFields) => {
     await setSelectedOptions((state: any) => [...state, option]);
   };
 
-  const filteredOptions = options.filter((option: OptionProps) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
+  const filteredOptions = options.filter((option: OptFields) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
 
   const isSelectedOptionsLengthFour = selectedOptions.length === 4;
 

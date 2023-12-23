@@ -1,10 +1,6 @@
 import React, { FC } from 'react'
 import styles from './TeamContainer.module.scss'
-
-interface TeamContainer {
-  team: any,
-  user: any,
-}
+import { TeamContainer } from '../../types/teamContainer.type'
 
 const TeamContainer: FC<TeamContainer> = ({ team, user }) => {
   return (

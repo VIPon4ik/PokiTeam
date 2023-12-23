@@ -6,16 +6,13 @@ import Select from '../Select/Select'
 import { fetchPokemons, fetchPokemonsTeam } from '../../api/pokemonApi'
 import { useForm } from 'react-hook-form'
 import TeamContainer from '../TeamContainer/TeamContainer'
+import { PokemonFormProps } from '../../types/pokemonFormProps.type'
 
-interface ModalFormProps {
-  title: string,
-}
-
-const ModalForm: FC<ModalFormProps> = ({ title }) => {
+const ModalForm: FC<PokemonFormProps> = ({ title }) => {
   const [pokemons, setPokemons] = useState([]);
   const [selectedPokemons, setSelectedPokemons] = useState<Object[]>([]);
   const [pokemonTeam, setPokemonTeam] = useState([]);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState(null);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
