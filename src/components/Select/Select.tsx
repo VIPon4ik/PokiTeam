@@ -33,7 +33,7 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
     await setSelectedOptions((state: any) => [...state, option]);
   };
 
-  const filteredOptions = options.filter((option: OptFields) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
+  const filteredOptions = options.filter((option: OptFields) => option.name.toLowerCase().includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
 
   const isSelectedOptionsLengthFour = selectedOptions.length === 4;
 

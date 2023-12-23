@@ -5,5 +5,5 @@ export interface SelectProps {
   options: Array<OptFields>,
   selectedOptions: Array<OptFields>,
   setSelectedOptions: Function,
-  error: string,
+  error?: string,
 }
