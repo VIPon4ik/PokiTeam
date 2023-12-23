@@ -57,7 +57,7 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
             className={styles.input}
             onChange={handleChangeFilter}
             type="text"
-            placeholder={selectedOptions.length === 0 && label}
+            placeholder={selectedOptions.length === 0 ? label : undefined}
             value={filter}
           />}
           <ChevronDownIcon className={styles.inputIcon} onClick={handleShowOptions} />
