@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC } from "react";
 import Option from "../Option/Option";
 import styles from './Select.module.scss';
-import { InformationCircleIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { InformationCircleIcon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 
 interface OptionProps {
@@ -19,7 +19,8 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
   const [filter, setFilter] = useState("");
   const [showOptions, setShowOptions] = useState(false);
 
-  const handleShowOptions = () => {
+  const handleShowOptions = (e:any) => {
+    e.preventDefault(); 
     setShowOptions(state => !state);
   }
 
@@ -39,13 +40,13 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
 
   const filteredOptions =  options.filter((option: OptionProps) => option.name.includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
 
-  const isSelectedOptionsLengthFour = selectedOptions.length !== 4;
+  const isSelectedOptionsLengthFour = selectedOptions.length === 4;
 
   return (
     <div className={styles.container}>
       <label className={styles.label}>
         <p className={styles.labelText}>{label} <InformationCircleIcon className={styles.labelIcon} /></p>
-        <div className={styles.inputContainer} onClick={handleShowOptions}>
+        <div className={styles.inputContainer}>
           <div className={styles.badgeContainer}>
             {selectedOptions.map((option: any) => (
               <button key={option.name} onClick={(e) => handleRemove(option, e)} className={styles.badge}>
@@ -54,17 +55,18 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
               </button>
             ))}
           </div>
-          {isSelectedOptionsLengthFour && <input
-            className={styles.input}
+          {!isSelectedOptionsLengthFour && <input
+            className={clsx(styles.input, selectedOptions.length === 0 && styles.inputFull)}
             onChange={handleChangeFilter}
             type="text"
-            placeholder={label}
+            placeholder={selectedOptions.length === 0 && label}
             value={filter}
           />}
+          <ChevronDownIcon className={styles.inputIcon} onClick={handleShowOptions}/>
         </div>
       </label>
-      <ul className={clsx(styles.optionList, showOptions && isSelectedOptionsLengthFour && styles.withBorder)}>
-        {showOptions && isSelectedOptionsLengthFour && filteredOptions.map((option, index) => (
+      <ul className={clsx(styles.optionList, showOptions && !isSelectedOptionsLengthFour && styles.withBorder)}>
+        {showOptions && !isSelectedOptionsLengthFour && filteredOptions.map((option, index) => (
           <Option
             key={index}
             option={option}

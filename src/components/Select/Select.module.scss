@@ -15,12 +15,15 @@
 }
 
 .inputContainer {
-    @apply border-borderGray border rounded-lg py-3 px-4 font-normal flex gap-2 h-12;
+    @apply border-borderGray border rounded-lg py-3 px-4 font-normal flex gap-2 min-h-12;
 }
 
 .input {
-    @apply outline-none w-full;
+    @apply outline-none;
+}
 
+.inputFull {
+    @apply w-full;
 }
 
 .error {
@@ -28,11 +31,11 @@
 }
 
 .inputIcon {
-    @apply size-5 absolute top-12 left-3;
+    @apply size-5 absolute top-12 right-3 cursor-pointer;
 }
 
 .badgeContainer {
-    @apply flex gap-1 max-w-64 overflow-ellipsis;
+    @apply flex gap-x-2 gap-y-1 flex-wrap flex-1 w-full max-w-80;
 }
 
 .badge {
