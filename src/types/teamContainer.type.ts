@@ -1,9 +1,6 @@
-interface UserProps {
-  name: string,
-  surname: string,
-}
+import { IPokemonsFormValues } from "./pokemonFormProps.type";
 
 export interface TeamContainerProps {
-  team: Array<string>,
-  user: UserProps | null,
+  team: string[],
+  user: IPokemonsFormValues | null,
 }

@@ -3,6 +3,7 @@ import styles from './TeamContainer.module.scss'
 import { TeamContainerProps } from '../../types/teamContainer.type'
 
 const TeamContainer: FC<TeamContainerProps> = ({ team, user }) => {
+  console.log(user);
   return (
     <div>
       {user && <p className={styles.text}>{`${user.name} ${user.surname} team:`}</p>}

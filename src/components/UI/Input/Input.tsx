@@ -9,7 +9,7 @@ const Input: FC<InputProps> = ({ label, register, error }) => {
     <label className={styles.label}>
       <p className={styles.labelText}>{label} <InformationCircleIcon className={styles.labelIcon} /></p>
       <input {...register} className={clsx(styles.input, error && styles.errorInput)} type='text' placeholder={label} />
-      {error && <p className={styles.errorText}>{error.message}</p>}
+      {error && <p className={styles.errorText}>{error}</p>}
       <EnvelopeIcon className={clsx(styles.inputIcon, error && styles.errorIcon)}/>
     </label>
   )

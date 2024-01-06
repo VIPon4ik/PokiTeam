@@ -72,8 +72,8 @@ const PokemonForm: FC<PokemonFormProps> = ({ title }) => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)} >
       <h1 className={styles.title}>{title}</h1>
-      <Input register={register("name", validationPattern)} label='Name' error={errors.name}></Input>
-      <Input register={register("surname", validationPattern)} label='Surname' error={errors.surname}></Input>
+      <Input register={register("name", validationPattern)} label='Name' error={errors.name?.message}></Input>
+      <Input register={register("surname", validationPattern)} label='Surname' error={errors.surname?.message}></Input>
       {/* Спросить у саши */}
       <Select label='Choose Pokemons' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={(pokemon: Pokemon[]) => setValue('selectedPokemons', pokemon)} error={selectedPokemons.length !== maxSelectedPokemons && error} maxSelectedOptions={maxSelectedPokemons} />
       <TeamContainer team={pokemonTeam} user={user} />
