@@ -1,9 +1,9 @@
-export interface OptFields {
+export interface OptionType {
   name: string;
   url: string,
 }
 
 export interface OptionProps {
-  option: OptFields;
-  handleSelect: (option: OptFields) => void;
+  option: OptionType;
+  handleSelect: (option: OptionType) => void;
 }

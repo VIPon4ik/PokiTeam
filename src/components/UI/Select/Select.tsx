@@ -4,13 +4,13 @@ import styles from './Select.module.scss';
 import { InformationCircleIcon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { SelectProps } from "../../../types/select.type";
-import { OptFields } from "../../../types/option.type";
+import { OptionType } from "../../../types/option.type";
 
 const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions, error, maxSelectedOptions }) => {
   const [filter, setFilter] = useState("");
   const [showOptions, setShowOptions] = useState(false);
-  
-  const handleShowOptions = (e: any) => {
+
+  const handleShowOptions = (e: React.MouseEvent<SVGElement>) => {
     e.preventDefault();
     if (isSelectedOptionsLengthIsMax) {
       return;
@@ -19,21 +19,21 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
     setShowOptions(state => !state);
   }
 
-  const handleChangeFilter = (e: any) => {
+  const handleChangeFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFilter(value);
   };
 
-  const handleRemove = (option: Object, e: any) => {
+  const handleRemove = (option: OptionType, e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setSelectedOptions((state: any) => state.filter((opt: any) => opt !== option));
+    setSelectedOptions((state: OptionType[]) => state.filter((opt: OptionType) => opt !== option));
   }
 
-  const handleSelect = async (option: OptFields) => {
-    await setSelectedOptions((state: any) => [...state, option]);
+  const handleSelect = async (option: OptionType) => {
+    await setSelectedOptions((state: OptionType[]) => [...state, option]);
   };
 
-  const filteredOptions = options.filter((option: OptFields) => option.name.toLowerCase().includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
+  const filteredOptions = options.filter((option: OptionType) => option.name.toLowerCase().includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
 
   const isSelectedOptionsLengthIsMax = selectedOptions.length === maxSelectedOptions;
 
@@ -48,7 +48,7 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
       <label className={styles.label}>
         <p className={styles.labelText}>{label} <InformationCircleIcon className={styles.labelIcon} /></p>
         <div className={clsx(styles.inputContainer, error && styles.errorInput)}>
-          {selectedOptions.map((option: any) => (
+          {selectedOptions.map((option: OptionType) => (
             <button key={option.name} onClick={(e) => handleRemove(option, e)} className={styles.badge}>
               {option.name}
               <XMarkIcon className={styles.badgeIcon} />

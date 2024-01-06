@@ -1,10 +1,10 @@
-import { OptFields } from "./option.type";
+import { OptionType } from "./option.type";
 
 export interface SelectProps {
   label: string;
-  options: Array<OptFields>;
-  selectedOptions: Array<OptFields> | any;
+  options: OptionType[];
+  selectedOptions: OptionType[];
   setSelectedOptions: Function;
-  error?: any;
+  error?: string | null | boolean;
   maxSelectedOptions: number;
 }
