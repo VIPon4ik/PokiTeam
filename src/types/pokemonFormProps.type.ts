@@ -5,7 +5,7 @@ export interface PokemonFormProps {
 export interface IPokemonsFormValues {
   name: string,
   surname: string,
-  selectedPokemons: string[],
+  selectedPokemons: Pokemon[],
 }
 
 export interface Pokemon {

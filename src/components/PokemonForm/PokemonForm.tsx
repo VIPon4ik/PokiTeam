@@ -18,7 +18,7 @@ const validationPattern = {
   },
 }
 
-const maxSelectedPokemons = 4;
+const maxSelectedPokemons = 5;
 
 const PokemonForm: FC<PokemonFormProps> = ({ title }) => {
   const [pokemons, setPokemons] = useState([]);
@@ -34,7 +34,7 @@ const PokemonForm: FC<PokemonFormProps> = ({ title }) => {
 
   const onError = () => {
     if (!isSelectedPokemonsLengthFour) {
-      setError('You need to choose 4 pokemons')
+      setError(`You need to choose ${maxSelectedPokemons} pokemons`)
     }
   }
 
@@ -45,7 +45,7 @@ const PokemonForm: FC<PokemonFormProps> = ({ title }) => {
 
   const onSubmit: SubmitHandler<IPokemonsFormValues> = async (data) => {
     if (!isSelectedPokemonsLengthFour) {
-      setError('You need to choose 4 pokemons')
+      setError(`You need to choose ${maxSelectedPokemons} pokemons`)
       return;
     }
 
@@ -74,7 +74,7 @@ const PokemonForm: FC<PokemonFormProps> = ({ title }) => {
       <h1 className={styles.title}>{title}</h1>
       <Input register={register("name", validationPattern)} label='Name' error={errors.name}></Input>
       <Input register={register("surname", validationPattern)} label='Surname' error={errors.surname}></Input>
-      <Select label='Choose Pokemons' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={(pokemon: any) => setValue('selectedPokemons', pokemon)} error={selectedPokemons.length !== 4 && error} />
+      <Select label='Choose Pokemons' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={(pokemon: Pokemon[]) => setValue('selectedPokemons', pokemon)} error={selectedPokemons.length !== maxSelectedPokemons && error} maxSelectedOptions={maxSelectedPokemons} />
       <TeamContainer team={pokemonTeam} user={user} />
       <Button />
     </form >

@@ -6,13 +6,13 @@ import clsx from "clsx";
 import { SelectProps } from "../../../types/select.type";
 import { OptFields } from "../../../types/option.type";
 
-// Cделать еще более рюзабельним (maxSelectedOptions)
-const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions, error }) => {
+const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions, error, maxSelectedOptions }) => {
   const [filter, setFilter] = useState("");
   const [showOptions, setShowOptions] = useState(false);
+  
   const handleShowOptions = (e: any) => {
     e.preventDefault();
-    if (isSelectedOptionsLengthFour) {
+    if (isSelectedOptionsLengthIsMax) {
       return;
     }
 
@@ -35,10 +35,10 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
 
   const filteredOptions = options.filter((option: OptFields) => option.name.toLowerCase().includes(filter.toLowerCase())).filter((option) => !selectedOptions.includes(option))
 
-  const isSelectedOptionsLengthFour = selectedOptions.length === 4;
+  const isSelectedOptionsLengthIsMax = selectedOptions.length === maxSelectedOptions;
 
   useEffect(() => {
-    if (isSelectedOptionsLengthFour) {
+    if (isSelectedOptionsLengthIsMax) {
       setShowOptions(false);
     }
   }, [selectedOptions])
@@ -54,7 +54,7 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
               <XMarkIcon className={styles.badgeIcon} />
             </button>
           ))}
-          {!isSelectedOptionsLengthFour && <input
+          {!isSelectedOptionsLengthIsMax && <input
             className={styles.input}
             onChange={handleChangeFilter}
             type="text"
@@ -65,8 +65,8 @@ const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedO
         </div>
         {error && <p className={styles.error}>{error}</p>}
       </label>
-      <ul className={clsx(styles.optionList, showOptions && !isSelectedOptionsLengthFour && styles.withBorder)}>
-        {showOptions && !isSelectedOptionsLengthFour && filteredOptions.map((option, index) => (
+      <ul className={clsx(styles.optionList, showOptions && !isSelectedOptionsLengthIsMax && styles.withBorder)}>
+        {showOptions && !isSelectedOptionsLengthIsMax && filteredOptions.map((option, index) => (
           <Option
             key={index}
             option={option}
