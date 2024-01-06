@@ -1,20 +1,32 @@
 import React, { FC, useEffect, useState } from 'react'
 import styles from './PokemonForm.module.scss'
-import Input from '../Input/Input'
-import Button from '../Button/Button'
-import Select from '../Select/Select'
+import Input from '../UI/Input/Input'
+import Button from '../UI/Button/Button'
+import Select from '../UI/Select/Select'
 import { fetchPokemons, fetchPokemonsTeam } from '../../api/pokemonApi'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import TeamContainer from '../TeamContainer/TeamContainer'
-import { PokemonFormProps } from '../../types/pokemonFormProps.type'
+import { PokemonFormProps, IPokemonsForm } from '../../types/pokemonFormProps.type'
+
+// Переписать щоб було реюзабельно
+const validationPattern = {
+  minLength: { value: 2, message: 'Minimum length 2 letters' },
+  maxLength: { value: 12, message: 'Max length 12 letters' },
+  required: { value: true, message: 'This field is required' }, pattern: {
+    value: /^[a-zA-Z]+$/,
+    message: 'Only characters from a-z and A-Z are accepted.',
+  },
+}
 
 const ModalForm: FC<PokemonFormProps> = ({ title }) => {
   const [pokemons, setPokemons] = useState([]);
-  const [selectedPokemons, setSelectedPokemons] = useState<Object[]>([]);
   const [pokemonTeam, setPokemonTeam] = useState([]);
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState(null);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset, formState: { errors }, setValue, control } = useForm<IPokemonsForm>({ defaultValues: { name: '', surname: '', selectedPokemons: [] } });
+
+  const selectedPokemons: any = useWatch({ name: 'selectedPokemons', control })
+  console.log(selectedPokemons);
 
   const isSelectedPokemonsLengthFour = selectedPokemons.length === 4;
 
@@ -25,7 +37,6 @@ const ModalForm: FC<PokemonFormProps> = ({ title }) => {
   }
 
   const resetForm = () => {
-    setSelectedPokemons([]);
     setError(null);
     reset();
   }
@@ -38,7 +49,7 @@ const ModalForm: FC<PokemonFormProps> = ({ title }) => {
 
     const responses: any = await fetchPokemonsTeam(selectedPokemons);
     setPokemonTeam(responses);
-    setUser({...data});
+    setUser({ ...data });
     resetForm();
   }
 
@@ -55,22 +66,14 @@ const ModalForm: FC<PokemonFormProps> = ({ title }) => {
     fetchData();
   }, []);
 
-  const validationPattern = {
-    minLength: { value: 2, message: 'Minimum length 2 letters'},
-    maxLength: { value: 12, message: 'Max length 12 letters'},
-    required: { value: true, message: 'This field is required' }, pattern: {
-      value: /^[a-zA-Z]+$/,
-      message: 'Only characters from a-z and A-Z are accepted.',
-    },
-  }
-
+  // Винести в UI
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)} >
       <h1 className={styles.title}>{title}</h1>
       <Input register={register("name", validationPattern)} label='Name' error={errors.name}></Input>
       <Input register={register("surname", validationPattern)} label='Surname' error={errors.surname}></Input>
-      <Select label='Choose Pokemons' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={setSelectedPokemons} error={selectedPokemons.length !== 4 && error} />
-      <TeamContainer team={pokemonTeam} user={user}/>
+      <Select label='Choose Pokemons' options={pokemons} selectedOptions={selectedPokemons} setSelectedOptions={(pokemon: any) => setValue('selectedPokemons', pokemon)} error={selectedPokemons.length !== 4 && error} />
+      <TeamContainer team={pokemonTeam} user={user} />
       <Button />
     </form >
   )

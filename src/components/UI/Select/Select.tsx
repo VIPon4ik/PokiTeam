@@ -3,10 +3,10 @@ import Option from "../Option/Option";
 import styles from './Select.module.scss';
 import { InformationCircleIcon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { SelectProps } from "../../types/select.type";
-import { OptFields } from "../../types/option.type";
+import { SelectProps } from "../../../types/select.type";
+import { OptFields } from "../../../types/option.type";
 
-
+// Cделать еще более рюзабельним (maxSelectedOptions)
 const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions, error }) => {
   const [filter, setFilter] = useState("");
   const [showOptions, setShowOptions] = useState(false);

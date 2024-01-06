@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import styles from './Option.module.scss';
-import { OptionProps } from "../../types/option.type";
+import { OptionProps } from "../../../types/option.type";
 
 const Option: FC<OptionProps> = ({ option, handleSelect }) => {
   return (
