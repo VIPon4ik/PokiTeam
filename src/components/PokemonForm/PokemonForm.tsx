@@ -1,12 +1,12 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import styles from './PokemonForm.module.scss'
 import Input from '../UI/Input/Input'
 import Button from '../UI/Button/Button'
 import Select from '../UI/Select/Select'
 import { fetchPokemons, fetchPokemonsTeam } from '../../api/pokemonApi'
-import { useForm, useWatch } from 'react-hook-form'
+import { useForm, useWatch, Control, SubmitHandler } from 'react-hook-form'
 import TeamContainer from '../TeamContainer/TeamContainer'
-import { PokemonFormProps, IPokemonsForm } from '../../types/pokemonFormProps.type'
+import { PokemonFormProps, IPokemonsFormValues, Pokemon } from '../../types/pokemonFormProps.type'
 
 // Переписать щоб було реюзабельно
 const validationPattern = {
@@ -18,17 +18,19 @@ const validationPattern = {
   },
 }
 
-const ModalForm: FC<PokemonFormProps> = ({ title }) => {
+const maxSelectedPokemons = 4;
+
+const PokemonForm: FC<PokemonFormProps> = ({ title }) => {
   const [pokemons, setPokemons] = useState([]);
-  const [pokemonTeam, setPokemonTeam] = useState([]);
+  const [pokemonTeam, setPokemonTeam] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState(null);
-  const { register, handleSubmit, reset, formState: { errors }, setValue, control } = useForm<IPokemonsForm>({ defaultValues: { name: '', surname: '', selectedPokemons: [] } });
+  const [user, setUser] = useState<IPokemonsFormValues | null>(null);
+  const { register, handleSubmit, reset, formState: { errors }, setValue, control } = useForm<IPokemonsFormValues>({ defaultValues: { name: '', surname: '', selectedPokemons: [] } });
 
-  const selectedPokemons: any = useWatch({ name: 'selectedPokemons', control })
-  console.log(selectedPokemons);
+  const selectedPokemons:any = useWatch({ name: 'selectedPokemons', control }) // Пропустим пока
+  // console.log(selectedPokemons);
 
-  const isSelectedPokemonsLengthFour = selectedPokemons.length === 4;
+  const isSelectedPokemonsLengthFour = selectedPokemons.length === maxSelectedPokemons;
 
   const onError = () => {
     if (!isSelectedPokemonsLengthFour) {
@@ -41,13 +43,13 @@ const ModalForm: FC<PokemonFormProps> = ({ title }) => {
     reset();
   }
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<IPokemonsFormValues> = async (data) => {
     if (!isSelectedPokemonsLengthFour) {
       setError('You need to choose 4 pokemons')
       return;
     }
 
-    const responses: any = await fetchPokemonsTeam(selectedPokemons);
+    const responses: string[] = await fetchPokemonsTeam(selectedPokemons);
     setPokemonTeam(responses);
     setUser({ ...data });
     resetForm();
@@ -79,4 +81,4 @@ const ModalForm: FC<PokemonFormProps> = ({ title }) => {
   )
 }
 
-export default ModalForm
+export default PokemonForm
