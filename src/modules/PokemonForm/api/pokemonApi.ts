@@ -1,8 +1,9 @@
 import axios from "axios";
-import { Pokemon } from "../types/pokemonFormProps.type";
-import errorIcon from '../assets/error-img.webp';
-// .env
-axios.defaults.baseURL = 'https://pokeapi.co/api/v2/pokemon'
+import { Pokemon } from "../types/pokemon.type";
+import errorIcon from '../../../assets/error-img.webp';
+import { API } from "../../../common/const/api.const";
+
+axios.defaults.baseURL = API.POKEMON_API_URL
 
 export const fetchPokemons = async () => {
   const response = await axios.get('/?limit=100');

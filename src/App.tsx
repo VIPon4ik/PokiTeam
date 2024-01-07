@@ -1,4 +1,4 @@
-import PokemonForm from './components/PokemonComponents/PokemonForm/PokemonForm'
+import { PokemonForm } from "./modules/PokemonForm"
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styles from './TeamContainer.module.scss'
-import { TeamContainerProps } from '../../../types/teamContainer.type'
+import { TeamContainerProps } from '../../types/pokemon.type'
 
 const TeamContainer: FC<TeamContainerProps> = ({ team, user }) => {
   return (

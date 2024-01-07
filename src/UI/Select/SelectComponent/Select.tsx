@@ -1,10 +1,10 @@
 import React, { useState, useEffect, FC } from "react";
-import Option from "../Option/Option";
+import Option from "../../Option/OptionComponent/Option";
 import styles from './Select.module.scss';
 import { InformationCircleIcon, XMarkIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
-import { SelectProps } from "../../../types/select.type";
-import { OptionType } from "../../../types/option.type";
+import { SelectProps } from "../types/select.type";
+import { OptionType } from "../../Option/types/option.type";
 
 const Select: FC<SelectProps> = ({ label, options, selectedOptions, setSelectedOptions, error, maxSelectedOptions }) => {
   const [filter, setFilter] = useState("");

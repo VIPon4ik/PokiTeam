@@ -12,3 +12,8 @@ export interface Pokemon {
   name: string;
   url:string;
 } 
+
+export interface TeamContainerProps {
+  team: string[],
+  user: IPokemonsFormValues,
+}
