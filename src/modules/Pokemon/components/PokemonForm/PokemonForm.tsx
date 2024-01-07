@@ -3,11 +3,11 @@ import styles from './PokemonForm.module.scss'
 import Input from '../../../../UI/Input/InputComponent/Input'
 import Button from '../../../../UI/Button/Button'
 import Select from '../../../../UI/Select/SelectComponent/Select'
-import { fetchPokemons, fetchPokemonsTeam } from '../../api/pokemonApi'
-import { useForm, useWatch, Control, SubmitHandler } from 'react-hook-form'
 import TeamContainer from '../TeamContainer/TeamContainer'
+import { fetchPokemons, fetchPokemonsTeam } from '../../../Pokemon/api/pokemonApi'
+import { useForm, useWatch, SubmitHandler } from 'react-hook-form'
 import { PokemonFormProps, IPokemonsFormValues, Pokemon } from '../../types/pokemon.type'
-import { validationSchema } from '../../const/validationSchema'
+import { validationSchema } from '../../../Pokemon/const/validationSchema'
 
 const maxSelectedPokemons = 4;
 

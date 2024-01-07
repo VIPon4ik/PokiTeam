@@ -15,5 +15,5 @@ export interface Pokemon {
 
 export interface TeamContainerProps {
   team: string[],
-  user: IPokemonsFormValues,
+  user: IPokemonsFormValues | null,
 }
